@@ -1,0 +1,379 @@
+
+/* ============ 主题变量定义 ============ */
+:root, [data-theme="spring"] {
+    --bg-color: #e8f5e9;
+    --widget-bg: rgba(255, 255, 255, 0.4);
+    --widget-line: rgba(255, 255, 255, 0.8);
+    /* 新增：注入文件二的半透明主题变量 */
+    --theme-blob: #a5d6a7;
+    --theme-accent: #388e3c;
+    --text-color: #2e4a3d;
+    --glass-bg: rgba(255, 255, 255, 0.3);
+    /* 图标自定义变量（默认值） */
+    --icon-size: 60px;
+    --icon-radius: 15px;
+}
+[data-theme="summer"] {
+    --bg-color: #e1f5fe;
+    --widget-bg: rgba(255, 255, 255, 0.4);
+    --widget-line: rgba(255, 255, 255, 0.8);
+    --theme-blob: #81d4fa;
+    --theme-accent: #0288d1;
+    --text-color: #1e375a;
+    --glass-bg: rgba(255, 255, 255, 0.3);
+}
+[data-theme="autumn"] {
+    --bg-color: #fff3e0;
+    --widget-bg: rgba(255, 255, 255, 0.4);
+    --widget-line: rgba(255, 255, 255, 0.8);
+    --theme-blob: #ffcc80;
+    --theme-accent: #f57c00;
+    --text-color: #5a371e;
+    --glass-bg: rgba(255, 255, 255, 0.3);
+}
+[data-theme="winter"] {
+    --bg-color: #f3f4f6;
+    --widget-bg: rgba(255, 255, 255, 0.4);
+    --widget-line: rgba(255, 255, 255, 0.8);
+    --theme-blob: #d1d5db;
+    --theme-accent: #4b5563;
+    --text-color: #1f2937;
+    --glass-bg: rgba(255, 255, 255, 0.3);
+}
+
+/* ============ CSS 样式部分 ============ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #dcdcdc; font-family: sans-serif; }
+
+/* ============ 字体变量定义 ============ */
+body[data-font="default"] {
+    font-family: sans-serif;
+}
+body[data-font="kaiti"] {
+    font-family: "KaiTi", "楷体", serif;
+}
+body[data-font="songti"] {
+    font-family: "SimSun", "宋体", serif;
+}
+
+.phone-container {
+    width: 390px;
+    height: 780px;
+    background-color: var(--bg-color);
+    border-radius: 40px;
+    border: 8px solid rgba(255, 255, 255, 0.8);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 屏幕主区域 (新增壁纸背景属性) */
+.screen-area {
+    flex: 1;
+    position: relative;
+    background-color: var(--bg-color);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    transition: background-color 0.5s ease, background-image 0.5s ease;
+}
+
+/* ============ 壁纸类名定义 ============ */
+.screen-area.wallpaper-default {
+    background-image: none;
+}
+.screen-area.wallpaper-mountain {
+    background-image: linear-gradient(135deg, rgba(44,62,80,0.2) 0%, rgba(52,152,219,0.2) 100%);
+}
+.screen-area.wallpaper-flower {
+    background-image: linear-gradient(135deg, rgba(245,87,108,0.2) 0%, rgba(240,147,251,0.2) 100%);
+}
+
+
+/* 桌面滑动层 */
+.desktop {
+    display: flex;
+    width: 200%;
+    height: 100%;
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+}
+
+/* 单个主屏 */
+.home-screen {
+    width: 50%;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* 小组件及图标样式 */
+.widget-window { 
+    position: absolute; 
+    left: 20px;
+    top: 20px;
+    width: 350px; 
+    height: 150px; 
+    background: var(--glass-bg); 
+    border-radius: 15px; 
+    perspective: 800px; 
+    touch-action: none;
+    z-index: 20; 
+}
+
+#winSys.open .page {
+    transform: rotateX(-45deg); 
+}
+
+/* 时间显示区域 */
+.time-display {
+    position: absolute;
+    top: 160px; 
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 28px;
+    color: var(--text-color);
+    text-shadow: 0 0 10px rgba(255,255,255,0.8);
+    cursor: pointer;
+    user-select: none;
+    letter-spacing: 2px;
+    opacity: 0;
+    pointer-events: none; 
+    transition: opacity 0.5s ease-in-out;
+    z-index: 10;
+}
+
+#winSys.open #timeDisplay {
+    opacity: 1;
+    pointer-events: auto; 
+}
+
+/* 图标网格容器 */
+.icon-grid { 
+    position: absolute; 
+    left: 20px; 
+    top: 250px; 
+    width: 350px; 
+    height: calc(100% - 250px); 
+}
+.mt-20 { top: 20px; height: 100%; }
+
+/* 图标包裹器样式 — 现在使用 CSS 变量 */
+.icon { 
+    width: var(--icon-size); 
+    height: calc(var(--icon-size) + 20px);
+    display: flex; 
+    flex-direction: column;
+    align-items: center; 
+    cursor: pointer; 
+    user-select: none; 
+    position: absolute; 
+    touch-action: none;
+    z-index: 15;
+    transition: left 0.3s ease, top 0.3s ease, width 0.25s ease, height 0.25s ease;
+}
+
+/* 图标方块样式 — 使用 CSS 变量 */
+.icon-box {
+    width: var(--icon-size); 
+    height: var(--icon-size); 
+    background: var(--glass-bg); 
+    border-radius: var(--icon-radius); 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    color: transparent; /* 核心修改：将文字设置为完全透明，保留占位但不显示 */
+    font-size: 14px; 
+    transition: width 0.25s ease, height 0.25s ease, border-radius 0.25s ease;
+}
+
+
+/* ============ 新增：各图标默认背景图（统一替换为半透明玻璃渐变） ============ */
+#icon-chat .icon-box {
+    background-image: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1));
+}
+#icon-setting .icon-box {
+    background-image: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1));
+}
+#icon-music .icon-box {
+    background-image: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1));
+}
+
+#icon-theme .icon-box {
+    background-image: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1));
+}
+#icon-worldbook .icon-box {
+    background-image: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1));
+}
+#icon-online .icon-box {
+    background-image: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1));
+}
+#icon-farm .icon-box {
+    background-image: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1));
+}
+#icon-study .icon-box {
+    background-image: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1));
+}
+
+
+/* ============ 新增：自定义图片覆盖样式 ============ */
+.icon-box.has-custom-image {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: transparent;
+}
+
+/* 图标文字标签样式 */
+.icon-name {
+    margin-top: 5px;
+    font-size: 12px;
+    color: var(--text-color);
+    text-shadow: 0 0 5px rgba(255,255,255,0.5);
+    white-space: nowrap;
+    transition: opacity 0.3s ease;
+}
+
+/* 隐藏名称的状态类 */
+.hide-names .icon-name {
+    opacity: 0;
+}
+
+/* ============ 花窗组件 CSS ============ */
+.top-frame { position: absolute; top: 0; left: 0; right: 0; height: 8px; background: var(--theme-blob); z-index: 5; }
+.bottom-frame { position: absolute; bottom: 0; left: 0; right: 0; height: 8px; background: var(--theme-blob); z-index: 5; }
+.left-frame { position: absolute; top: 0; bottom: 0; left: 0; width: 8px; background: var(--theme-blob); z-index: 5; }
+.right-frame { position: absolute; top: 0; bottom: 0; right: 0; width: 8px; background: var(--theme-blob); z-index: 5; }
+
+/* 花窗页面 */
+.page {
+    position: absolute;
+    top: 8px; left: 8px; right: 8px; bottom: 8px;
+    background: var(--widget-bg);
+    border: 2px solid var(--widget-line);
+    z-index: 10;
+    transform-origin: top center;
+    transition: transform 0.7s ease-in-out, background 0.5s ease, border-color 0.5s ease;
+    background-image: 
+        linear-gradient(to right, transparent 49%, var(--widget-line) 49%, var(--widget-line) 51%, transparent 51%),
+        linear-gradient(to bottom, transparent 49%, var(--widget-line) 49%, var(--widget-line) 51%, transparent 51%);
+}
+
+.flower-branch {
+    position: absolute;
+    bottom: 12px; right: 12px; width: 40px; height: 40px; z-index: 50; cursor: pointer;
+    transform: scaleX(-1); transition: transform 0.3s ease;
+}
+.flower-branch:hover { transform: scaleX(-1) scale(1.05); }
+.branch { position: absolute; bottom: 0; left: 10px; width: 25px; height: 25px; border-left: 3px solid var(--theme-accent); border-bottom: 3px solid transparent; border-radius: 0 0 0 20px; }
+.leaf { position: absolute; top: 15px; left: 18px; width: 10px; height: 10px; background: var(--theme-blob); border-radius: 10px 0 10px 0; }
+.flower { position: absolute; top: 5px; left: 5px; width: 12px; height: 12px; background: white; border-radius: 50%; box-shadow: 6px 4px 0 -1px var(--theme-blob), -6px 4px 0 -1px var(--theme-blob), 0 8px 0 -1px var(--theme-blob); }
+
+/* 提示框 */
+#toast { position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%); background: var(--glass-bg); color: var(--text-color); padding: 8px 16px; border-radius: 20px; font-size: 14px; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 200; white-space: nowrap; }
+
+/* ============ App运行层 ============ */
+.app-layer { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: var(--bg-color); 
+    transform: translateY(100%); 
+    transition: transform 0.3s ease-in-out; 
+    z-index: 100; 
+    display: none;
+}
+
+.app-layer.active { 
+    transform: translateY(0); 
+}
+
+#app-frame { 
+    width: 100%; 
+    height: 100%; 
+    border: none; 
+    display: block; 
+}
+
+.home-btn { 
+    position: absolute; 
+    bottom: 20px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    width: 120px; 
+    height: 30px; 
+    border-radius: 15px; 
+    border: none; 
+    background: var(--glass-bg); 
+    color: var(--text-color); 
+    cursor: pointer; 
+    font-size: 12px; 
+    z-index: 101;
+}
+
+/* 底部Dock区域 */
+.dock { 
+    height: 80px; 
+    background-color: rgba(255, 255, 255, 0.2); 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 0 15px; 
+    border-radius: 20px 20px 0 0; 
+    z-index: 100;
+    position: relative; /* 新增：为诗句的绝对居中提供参考系 */
+}
+
+/* --- 新增：Dock 内部隐形热区按钮样式 --- */
+.dock-btn {
+    width: 60px;
+    height: 60px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-color); /* 图标颜色跟随主题 */
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-radius 0.3s ease;
+    -webkit-tap-highlight-color: transparent; /* 消除移动端默认点击高亮 */
+    z-index: 2; /* 确保按钮在文字之上，可被点击 */
+}
+
+/* 按钮按压反馈 */
+.dock-btn:active {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+}
+
+/* --- 新增：诗句绝对居中 --- */
+#poem-text {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--text-color);
+    white-space: nowrap;
+    pointer-events: none; /* 防止文字遮挡导致滑动/点击失效 */
+    z-index: 1;
+}
+
+/* --- 新增：风车图标的过渡动画 --- */
+.pinwheel-icon {
+    transition: transform 0.3s ease;
+    transform-origin: center;
+}
+
+/* 当父级按钮被按下时，内部的风车旋转 180 度 */
+.dock-btn:active .pinwheel-icon {
+    transform: rotate(180deg);
+}
+
+

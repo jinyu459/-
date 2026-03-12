@@ -1,0 +1,9 @@
+/* 消除移动端点击蓝色高亮和外边框 */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); 
+}
+
+a, button, input, textarea {
+  outline: none;
+}

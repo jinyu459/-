@@ -1,0 +1,296 @@
+/* 基础重置与最简样式 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+/* 顶部导航栏 */
+.header {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    background-color: #fff;
+    padding: 0 15px;
+    border-bottom: 1px solid #ddd;
+}
+.back-btn {
+    padding: 5px 10px;
+    background-color: transparent;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.header-title {
+    margin-left: 15px;
+    font-weight: bold;
+}
+
+/* 标签页导航 */
+.tabs {
+    display: flex;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
+.tab-item {
+    flex: 1;
+    text-align: center;
+    padding: 12px 0;
+    font-size: 14px;
+    cursor: pointer;
+    color: #666;
+}
+.tab-item.active {
+    color: #007bff;
+    border-bottom: 2px solid #007bff;
+    font-weight: bold;
+}
+
+/* 标签页内容区 */
+.tab-content {
+    display: none;
+    padding: 15px;
+}
+.tab-content.active {
+    display: block;
+}
+
+/* 四季卡片样式 */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+.season-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.season-card:active {
+    background-color: #eee;
+}
+
+/* 占位文字样式 */
+.placeholder {
+    text-align: center;
+    color: #999;
+    margin-top: 50px;
+}
+
+/* 壁纸卡片专属样式 */
+.wallpaper-card {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.wallpaper-card span {
+    background: rgba(255,255,255,0.7);
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 16px;
+}
+
+/* ============ 自定义面板样式 ============ */
+.custom-section {
+    background: #fff;
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.custom-section h3 {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eee;
+}
+.control-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+.control-row:last-child {
+    margin-bottom: 0;
+}
+.control-label {
+    font-size: 14px;
+    color: #555;
+    min-width: 70px;
+}
+.control-body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    margin-left: 12px;
+}
+.control-body input[type="range"] {
+    flex: 1;
+    -webkit-appearance: none;
+    height: 6px;
+    border-radius: 3px;
+    background: #ddd;
+    outline: none;
+}
+.control-body input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #007bff;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+.control-value {
+    min-width: 42px;
+    text-align: right;
+    font-size: 13px;
+    color: #007bff;
+    font-weight: bold;
+    margin-left: 8px;
+}
+
+/* 实时预览盒子 */
+.preview-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0 8px 0;
+}
+.preview-icon-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.preview-icon {
+    background: #3498db;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 13px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+.preview-icon-name {
+    margin-top: 5px;
+    font-size: 11px;
+    color: #888;
+}
+
+/* 保存 / 重置按钮 */
+.btn-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 6px;
+}
+.save-btn, .reset-btn {
+    flex: 1;
+    padding: 12px 0;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+.save-btn {
+    background: #007bff;
+    color: #fff;
+}
+.reset-btn {
+    background: #eee;
+    color: #555;
+}
+.save-btn:active, .reset-btn:active {
+    opacity: 0.7;
+}
+
+/* 保存成功提示 */
+.save-toast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background: rgba(0,0,0,0.75);
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-size: 15px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s ease;
+    z-index: 999;
+}
+.save-toast.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* ============ 图标图片选择样式 ============ */
+.icon-img-preview {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    border: 2px dashed #ccc;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #f9f9f9;
+    flex-shrink: 0;
+}
+.icon-img-preview.has-image {
+    border-style: solid;
+    border-color: #007bff;
+}
+.img-pick-btn, .img-clear-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    margin-left: 8px;
+    white-space: nowrap;
+}
+.img-pick-btn {
+    background: #007bff;
+    color: #fff;
+}
+.img-pick-btn:active {
+    opacity: 0.7;
+}
+.img-clear-btn {
+    background: #eee;
+    color: #555;
+}
+.img-clear-btn:active {
+    opacity: 0.7;
+}
+
+/* ============ 图标名称输入框样式 ============ */
+.name-input {
+    flex: 1;
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+}
+.name-input:focus {
+    border-color: #007bff;
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设置 - 测试版</title> 
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="./setting.css">
+</head>
+<body>
+
+    <!-- 顶部返回与标题 -->
+    <div class="header">
+        <button class="jinyu-btn" onclick="goBack()">返回</button>
+        <h1>系统设置</h1>
+    </div>
+
+    <!-- 标签页导航 -->
+    <ul class="nav-tabs">
+        <li class="nav-item active" onclick="switchSettingsTab('tab-api', this)">API预设管理</li>
+        <li class="nav-item" onclick="switchSettingsTab('tab-appearance', this)">外观设置</li>
+        <li class="nav-item" onclick="switchSettingsTab('tab-data', this)">数据管理</li>
+    </ul>
+
+    <!-- 标签页 1：API预设管理 -->
+    <div id="tab-api" class="settings-tab active">
+        <div class="jinyu-card">
+            <h3>API 预设列表</h3>
+            <ul id="api-presets-list" class="jinyu-list">
+                <!-- 预设列表动态填充 -->
+            </ul>
+            <button class="jinyu-btn" style="margin-top: 15px; border-color: var(--primary-color); color: var(--primary-color);" onclick="createNewApiPreset()">+ 新建预设</button>
+        </div>
+
+        <div class="jinyu-card">
+            <h3 id="api-form-title">新建 API 预设</h3>
+            
+            <label>预设名称</label>
+            <input type="text" id="api-name" class="jinyu-input" placeholder="例如：OpenAI 默认">
+            
+            <label>API URL</label>
+            <input type="text" id="api-url" class="jinyu-input" placeholder="https://api.openai.com/v1/chat/completions">
+            
+            <label>API Key</label>
+            <input type="password" id="api-key" class="jinyu-input" placeholder="sk-...">
+            
+            <label>模型名称 (Model)</label>
+            <input type="text" id="api-model" class="jinyu-input" placeholder="gpt-3.5-turbo">
+            
+            <label>温度 (Temperature)</label>
+            <input type="number" id="api-temperature" class="jinyu-input" step="0.1" min="0" max="2" placeholder="0.7">
+
+            <div>
+                <button id="api-submit-btn" class="jinyu-btn" style="background: var(--primary-color); color: white; border: none;" onclick="saveApiPreset()">保存预设</button>
+                <button class="jinyu-btn" onclick="testApiPreset()">测试连接</button>
+                <button class="jinyu-btn" onclick="cancelApiEdit()">取消 / 清空</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 标签页 2：外观设置 -->
+    <div id="tab-appearance" class="settings-tab">
+        <div class="jinyu-card">
+            <h3>Dock 栏一言设置</h3>
+            <label>自定义诗句/一言</label>
+            <input type="text" id="dock-poem-input" class="jinyu-input" placeholder="输入你想在底部显示的话...">
+            <button class="jinyu-btn" onclick="saveDockPoem()">保存一言</button>
+            <button class="jinyu-btn" onclick="resetDockPoem()">恢复默认</button>
+
+            <!-- 诗句预览区域 -->
+            <div style="margin-top: 20px; padding: 15px; background: #f9f9f9; border-left: 4px solid var(--primary-color); border-radius: 4px;">
+                <strong>当前预览：</strong>
+                <span id="dock-poem-preview" style="margin-left: 10px; font-style: italic; color: #555;"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 标签页 3：数据管理 -->
+    <div id="tab-data" class="settings-tab">
+        <div class="jinyu-card">
+            <h3>备份与恢复</h3>
+            <input type="file" id="backup-import-input" style="display: none;" accept=".json">
+            <button class="jinyu-btn" onclick="triggerBackupImport()">导入备份</button>
+            <button class="jinyu-btn" onclick="exportBackup()">导出备份</button>
+        </div>
+        <div class="jinyu-card">
+            <h3>危险操作</h3>
+            <button class="jinyu-btn" style="color: red; border-color: red;" onclick="clearCache()">清除缓存</button>
+            <button class="jinyu-btn" style="color: red; border-color: red;" onclick="resetApp()">重置应用</button>
+        </div>
+    </div>
+
+<script src="../assets/js/dataHub.js"></script>
+<script src="setting.js"></script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主题应用</title>
+    <link rel="stylesheet" href="theme.css">
+</head>
+<body>
+
+    <!-- 顶部导航 -->
+    <div class="header">
+        <button class="back-btn" id="backBtn">返回</button>
+        <div class="header-title">主题设置</div>
+    </div>
+
+    <!-- 标签页导航 -->
+    <div class="tabs">
+        <div class="tab-item active" data-target="tab-seasons">四季</div>
+        <div class="tab-item" data-target="tab-fonts">字体</div>
+        <div class="tab-item" data-target="tab-wallpapers">壁纸</div>
+        <div class="tab-item" data-target="tab-custom">应用自定义</div>
+    </div>
+
+    <!-- 1. 四季 -->
+    <div id="tab-seasons" class="tab-content active">
+        <div class="card-grid">
+            <div class="season-card" data-season="spring">春</div>
+            <div class="season-card" data-season="summer">夏</div>
+            <div class="season-card" data-season="autumn">秋</div>
+            <div class="season-card" data-season="winter">冬</div>
+        </div>
+    </div>
+
+    <!-- 2. 字体 -->
+    <div id="tab-fonts" class="tab-content">
+        <div class="card-grid">
+            <div class="font-card season-card" data-font="default" style="font-family: sans-serif;">默认字体</div>
+            <div class="font-card season-card" data-font="kaiti" style="font-family: 'KaiTi', '楷体', serif;">楷体</div>
+            <div class="font-card season-card" data-font="songti" style="font-family: 'SimSun', '宋体', serif;">宋体</div>
+        </div>
+    </div>
+
+    <!-- 3. 壁纸 -->
+    <div id="tab-wallpapers" class="tab-content">
+        <div class="card-grid">
+            <button class="wallpaper-btn season-card" data-wallpaper="default">默认</button>
+            <button class="wallpaper-btn season-card" data-wallpaper="mountain">山水</button>
+            <button class="wallpaper-btn season-card" data-wallpaper="flower">花卉</button>
+        </div>
+    </div>
+
+    <!-- 4. 应用自定义 -->
+    <div id="tab-custom" class="tab-content">
+
+        <!-- 图标外观 -->
+        <div class="custom-section">
+            <h3>📐 图标外观</h3>
+
+            <!-- 圆角 -->
+            <div class="control-row">
+                <span class="control-label">圆角</span>
+                <div class="control-body">
+                    <input type="range" id="rangeRadius" min="0" max="30" value="15">
+                    <span class="control-value" id="valRadius">15px</span>
+                </div>
+            </div>
+
+            <!-- 大小 -->
+            <div class="control-row">
+                <span class="control-label">大小</span>
+                <div class="control-body">
+                    <input type="range" id="rangeSize" min="40" max="80" value="60">
+                    <span class="control-value" id="valSize">60px</span>
+                </div>
+            </div>
+
+            <!-- 实时预览 -->
+            <div class="preview-area">
+                <div class="preview-icon-box">
+                    <div class="preview-icon" id="previewIcon">预览</div>
+                    <span class="preview-icon-name">实时预览</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ 图标图片更换 ============ -->
+        <div class="custom-section">
+            <h3>🖼️ 图标图片</h3>
+
+            <!-- 聊天 -->
+            <div class="control-row">
+                <span class="control-label">聊天</span>
+                <div class="control-body">
+                    <div class="icon-img-preview" id="preview_chat"></div>
+                    <button class="img-pick-btn" onclick="pickIconImage('chat')">选择</button>
+                    <button class="img-clear-btn" onclick="clearIconImage('chat')">清除</button>
+                    <input type="file" id="fileInput_chat" accept="image/*" style="display:none" onchange="handleImageSelect('chat', this)">
+                </div>
+            </div>
+
+            <!-- 设置 -->
+            <div class="control-row">
+                <span class="control-label">设置</span>
+                <div class="control-body">
+                    <div class="icon-img-preview" id="preview_setting"></div>
+                    <button class="img-pick-btn" onclick="pickIconImage('setting')">选择</button>
+                    <button class="img-clear-btn" onclick="clearIconImage('setting')">清除</button>
+                    <input type="file" id="fileInput_setting" accept="image/*" style="display:none" onchange="handleImageSelect('setting', this)">
+                </div>
+            </div>
+
+            <!-- 音乐 -->
+            <div class="control-row">
+                <span class="control-label">音乐</span>
+                <div class="control-body">
+                    <div class="icon-img-preview" id="preview_music"></div>
+                    <button class="img-pick-btn" onclick="pickIconImage('music')">选择</button>
+                    <button class="img-clear-btn" onclick="clearIconImage('music')">清除</button>
+                    <input type="file" id="fileInput_music" accept="image/*" style="display:none" onchange="handleImageSelect('music', this)">
+                </div>
+            </div>
+
+            <!-- 美化 -->
+            <div class="control-row">
+                <span class="control-label">美化</span>
+                <div class="control-body">
+                    <div class="icon-img-preview" id="preview_theme"></div>
+                    <button class="img-pick-btn" onclick="pickIconImage('theme')">选择</button>
+                    <button class="img-clear-btn" onclick="clearIconImage('theme')">清除</button>
+                    <input type="file" id="fileInput_theme" accept="image/*" style="display:none" onchange="handleImageSelect('theme', this)">
+                </div>
+            </div>
+
+            <!-- 世界书 -->
+            <div class="control-row">
+                <span class="control-label">世界书</span>
+                <div class="control-body">
+                    <div class="icon-img-preview" id="preview_worldbook"></div>
+                    <button class="img-pick-btn" onclick="pickIconImage('worldbook')">选择</button>
+                    <button class="img-clear-btn" onclick="clearIconImage('worldbook')">清除</button>
+                    <input type="file" id="fileInput_worldbook" accept="image/*" style="display:none" onchange="handleImageSelect('worldbook', this)">
+                </div>
+            </div>
+
+            <!-- 联机 -->
+            <div class="control-row">
+                <span class="control-label">联机</span>
+                <div class="control-body">
+                    <div class="icon-img-preview" id="preview_online"></div>
+                    <button class="img-pick-btn" onclick="pickIconImage('online')">选择</button>
+                    <button class="img-clear-btn" onclick="clearIconImage('online')">清除</button>
+                    <input type="file" id="fileInput_online" accept="image/*" style="display:none" onchange="handleImageSelect('online', this)">
+                </div>
+            </div>
+
+            <!-- 农场 -->
+            <div class="control-row">
+                <span class="control-label">农场</span>
+                <div class="control-body">
+                    <div class="icon-img-preview" id="preview_farm"></div>
+                    <button class="img-pick-btn" onclick="pickIconImage('farm')">选择</button>
+                    <button class="img-clear-btn" onclick="clearIconImage('farm')">清除</button>
+                    <input type="file" id="fileInput_farm" accept="image/*" style="display:none" onchange="handleImageSelect('farm', this)">
+                </div>
+            </div>
+
+            <!-- 学习 -->
+            <div class="control-row">
+                <span class="control-label">学习</span>
+                <div class="control-body">
+                    <div class="icon-img-preview" id="preview_study"></div>
+                    <button class="img-pick-btn" onclick="pickIconImage('study')">选择</button>
+                    <button class="img-clear-btn" onclick="clearIconImage('study')">清除</button>
+                    <input type="file" id="fileInput_study" accept="image/*" style="display:none" onchange="handleImageSelect('study', this)">
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ============ 图标名称修改 ============ -->
+        <div class="custom-section">
+            <h3>✏️ 图标名称</h3>
+
+            <div class="control-row">
+                <span class="control-label">聊天</span>
+                <div class="control-body">
+                    <input type="text" class="name-input" id="name_chat" placeholder="聊天">
+                </div>
+            </div>
+
+            <div class="control-row">
+                <span class="control-label">设置</span>
+                <div class="control-body">
+                    <input type="text" class="name-input" id="name_setting" placeholder="设置">
+                </div>
+            </div>
+
+            <div class="control-row">
+                <span class="control-label">音乐</span>
+                <div class="control-body">
+                    <input type="text" class="name-input" id="name_music" placeholder="音乐">
+                </div>
+            </div>
+
+            <div class="control-row">
+                <span class="control-label">美化</span>
+                <div class="control-body">
+                    <input type="text" class="name-input" id="name_theme" placeholder="美化">
+                </div>
+            </div>
+
+            <div class="control-row">
+                <span class="control-label">世界书</span>
+                <div class="control-body">
+                    <input type="text" class="name-input" id="name_worldbook" placeholder="世界书">
+                </div>
+            </div>
+
+            <div class="control-row">
+                <span class="control-label">联机</span>
+                <div class="control-body">
+                    <input type="text" class="name-input" id="name_online" placeholder="联机">
+                </div>
+            </div>
+
+            <div class="control-row">
+                <span class="control-label">农场</span>
+                <div class="control-body">
+                    <input type="text" class="name-input" id="name_farm" placeholder="农场">
+                </div>
+            </div>
+
+            <div class="control-row">
+                <span class="control-label">学习</span>
+                <div class="control-body">
+                    <input type="text" class="name-input" id="name_study" placeholder="学习">
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 按钮 -->
+        <div class="btn-row">
+            <button class="reset-btn" id="resetBtn">恢复默认</button>
+            <button class="save-btn" id="saveBtn">保存设置</button>
+        </div>
+    </div>
+
+    <!-- 轻提示 -->
+    <div class="save-toast" id="saveToast">✅ 设置已保存</div>
+
+    <script src="theme.js"></script>
+    <script src="../assets/js/dataHub.js"></script>
+</body>
+</html>
